@@ -1,0 +1,8 @@
+python train.py --hidden_dim=256 --dropout_rate=0.3 *--seed=1~2 *--num_layers=1~2
+python train.py --hidden_dim=256 --dropout_rate=0.5 *--seed=1~2 *--num_layers=1~2
+python train.py --hidden_dim=512 --dropout_rate=0.3 *--seed=1~2 *--num_layers=1~2
+python train.py --hidden_dim=512 --dropout_rate=0.5 *--seed=1~2 *--num_layers=1~2
+python train.py --clip_gradient --hidden_dim=256 --dropout_rate=0.3 *--seed=1~2 *--num_layers=1~2
+python train.py --clip_gradient --hidden_dim=256 --dropout_rate=0.5 *--seed=1~2 *--num_layers=1~2
+python train.py --clip_gradient --hidden_dim=512 --dropout_rate=0.3 *--seed=1~2 *--num_layers=1~2
+python train.py --clip_gradient --hidden_dim=512 --dropout_rate=0.5 *--seed=1~2 *--num_layers=1~2

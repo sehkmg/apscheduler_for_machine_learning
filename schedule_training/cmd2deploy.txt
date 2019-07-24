@@ -1,0 +1,26 @@
+gpu:0
+python train.py --hidden_dim=256 --dropout_rate=0.3 *--seed=1~2 *--num_layers=1~2 # deploy immediately using gpu 0, you can write comment like this.
+
+gpu:1
+python train.py --clip_gradient --hidden_dim=256 --dropout_rate=0.3 --seed=1 --num_layers=1     #   deploy immediately using gpu 1.
+
+python train.py --hidden_dim=512 --dropout_rate=0.5 --seed=2 --num_layers=1 # deploy immediately using gpu 1.
+python train.py --hidden_dim=512 --dropout_rate=0.5 --seed=1 --num_layers=2 # run right after previous experiment ended.
+
+
+
+
+
+
+doc
+1. you can write document like this.
+
+2.
+python train.py --hidden_dim=256 --dropout_rate=0.3 *--seed=1~2 *--num_layers=1~2
+is exactly equivalent to:
+python train.py --hidden_dim=256 --dropout_rate=0.3 --seed=1 --num_layers=1
+python train.py --hidden_dim=256 --dropout_rate=0.3 --seed=1 --num_layers=2
+python train.py --hidden_dim=256 --dropout_rate=0.3 --seed=2 --num_layers=1
+python train.py --hidden_dim=256 --dropout_rate=0.3 --seed=2 --num_layers=2
+
+3. only comment after command is allowed.
