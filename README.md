@@ -1,4 +1,4 @@
-# APscheduler for machine learning
+# APScheduler for machine learning
 APScheduler for deploying lots of machine learning experiments.
 
 ## Environment
