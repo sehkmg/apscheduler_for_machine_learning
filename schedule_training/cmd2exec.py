@@ -33,15 +33,16 @@ command = [base_command]
 if onoff_args_num==0:
     command_list.append(command)
 
-for i in range(onoff_args_cases):
-    case = ('{:0' + str(onoff_args_num) + '}').format(int(bin(i)[2:]))
+else:
+    for i in range(onoff_args_cases):
+        case = ('{:0' + str(onoff_args_num) + '}').format(int(bin(i)[2:]))
 
-    for idx in range(onoff_args_num):
-        if case[idx] == '1':
-            command.append(onoff_args[idx])
+        for idx in range(onoff_args_num):
+            if case[idx] == '1':
+                command.append(onoff_args[idx])
 
-    command_list.append(command)
-    command = [base_command]
+        command_list.append(command)
+        command = [base_command]
 
 # prepare argument info
 arg_list = [[]]
