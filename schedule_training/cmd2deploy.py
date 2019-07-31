@@ -1,10 +1,12 @@
 from copy import deepcopy
+import argparse
 
 class cmd2deploy:
-    def __init__(self):
+    def __init__(self, server_num):
         self.cmd_file = open('schedule_training/cmd2deploy.txt', 'r')
         self.gpu_str = 'CUDA_VISIBLE_DEVICES={} '
         self.command_lists = []
+        self.server_num = server_num
 
     def get_line(self):
         return self.cmd_file.readline()
@@ -35,6 +37,11 @@ class cmd2deploy:
         # see first line
         line = self.get_line()
 
+        while line.strip() != 'server:{}'.format(self.server_num) and line:
+            line = self.get_line()
+
+        line = self.get_line()
+
         # if current line is gpu info, execute
         while line[:3] == 'gpu':
             # store gpu number
@@ -50,7 +57,7 @@ class cmd2deploy:
                 # if current line is not newline and EOF or doc
                 # repeat adding commands
                 command_list = []
-                while line != '\n' and line and line != 'doc':
+                while line != '\n' and line and line != 'doc' and line[:6] != 'server':
 
                     # load command and extent iteration
                     command = line.strip().split(' ')
@@ -69,7 +76,7 @@ class cmd2deploy:
                 if len(command_list) != 0:
                     self.command_lists.append(command_list)
                 # if current line is EOF or doc, return command_lists
-                if not line or line == 'doc':
+                if not line or line == 'doc' or line[:6] == 'server':
                     self.cmd_file.close()
                     return self.command_lists
 
@@ -79,8 +86,18 @@ class cmd2deploy:
                     line = line.strip()
 
 if __name__=='__main__':
-    cmd2deploy = cmd2deploy()
+    parser = argparse.ArgumentParser(description='deploy')
+    parser.add_argument(
+        '--server_num',
+        type=int,
+        default=0)
+    args = parser.parse_args()
+
+    cmd2deploy = cmd2deploy(args.server_num)
     command_lists = cmd2deploy.make_cmd_list()
+
+    if command_lists is None:
+        assert False, "Empty command list."
 
     for command_list in command_lists:
         for command in command_list:

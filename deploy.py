@@ -1,11 +1,19 @@
 from datetime import datetime, timedelta
 import time
 import os
+import argparse
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from threading import Lock
 
 from schedule_training.cmd2deploy import cmd2deploy
+
+parser = argparse.ArgumentParser(description='deploy')
+parser.add_argument(
+    '--server_num',
+    type=int,
+    default=0)
+args = parser.parse_args()
 
 # store total commands to know when to stop scheduler
 total = 0
@@ -33,7 +41,7 @@ scheduler = BackgroundScheduler(executors=executors)
 scheduler.start()
 
 # get command_lists
-cmd2deploy = cmd2deploy()
+cmd2deploy = cmd2deploy(args.server_num)
 command_lists = cmd2deploy.make_cmd_list()
 
 # store total commands
